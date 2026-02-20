@@ -144,5 +144,159 @@ class DLL<E> {
     }
 
 
+        public E get(int index) {
+        if(index < 0 || index >= counter || isEmpty()){
+            return null;
+        }
+
+        Node<E> curr = head;
+
+        for(int i = 0; i < index; i++)
+        {
+            curr = curr.getNext();
+        }
+
+        return curr.getElement();
+
+        }
+
+    public E remove(int index) {
+        if(index < 0 || index >= size || isEmpty())
+        {
+            return null;
+        }
+
+
+        if(index == 0) {
+            return removeFirst();
+        }
+
+       if (index == counter - 1) {
+
+        return removeLast();
+
+       }
+
+       Node<E> curr = head;
+
+       for (int i = 0; i < index; i++)
+       {
+        curr = curr.getNext();
+       }
+
+       E removedElement = curr.getElement();
+
+       Node<E> prevNode = curr.getPrev();
+       Node<E> nextNode = curr.getNext();
+
+       prevNode.setNext(nextNode);
+       nextNode.setPrev(prevNode);
+
+       counter--;
+
+       return removedElement;
+
+    }
+
+    public void remove(Node<E> x) {
+
+        if(x == null || isEmpty()) {
+            return;
+        }
+
+        if (x == head) {
+            removeFirst();
+            return;
+        }
+
+        if(x == tail) {
+            removeLast();
+            return;
+        }
+
+        Node<E> prevNode = x.getPrev();
+        Node<E> nextNode = x.getNext();
+
+
+        prevNode.setNext(nextNode);
+        nextNode.setPrev(prevNode);
+
+        counter--;
+
+    }
+
+    private Node<E> find(E element) {
+
+        if(isEmpty()) {
+            return null;
+        }
+
+
+        Node<E> current = head;
+
+        while(current != null) {
+
+            if((element == null && current.getElement() == null) ||
+            (element != null && element.equals(current.getElement()))) {
+                    return current;
+                }
+
+                current = current.getNext();
+        }
+
+        return null;
+
+    }
+
+
+    public void clear() {
+
+        Node<E> current = head;
+
+        while (current != null) {
+            Node<E> next = current.getNext();
+
+            current.setPrev(null);
+            current.setNext(null);
+            current.setElement(null);
+
+            current = next;
+
+        }
+
+        head = null;
+        tail = null;
+        counter = 0;
+
+        // when we remove all nodes, that's not just setting to null, but making them
+        // eligible for Java garabage collection
+
+    }
+
+
+    public E set(int index, E element) {
+
+        if(index < 0 || index >= counter || isEmpty()) {
+            return null;
+        }
+
+        Node<E> current = head;
+
+        for(int i = 0; i < index; i++)
+        {
+            current = current.getNext();
+        }
+
+        E oldElement = current.getElement();
+        curent.setElement(element);
+
+        return oldElement;
+
+    }
+
+
+
+
+
 
 }
